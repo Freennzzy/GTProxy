@@ -43,19 +43,19 @@ enum class Direction {
     ServerBound,
 };
 
-constexpr uint32_t packet_event_offset() {
+[[nodiscard]] constexpr uint32_t packet_event_offset() {
     return static_cast<uint32_t>(Type::PacketEventOffset);
 }
 
-constexpr bool is_packet_event(const Type t) {
+[[nodiscard]] constexpr bool is_packet_event(const Type t) {
     return static_cast<uint32_t>(t) >= packet_event_offset();
 }
 
-constexpr Type packet_event_type(const packet::PacketId id) {
+[[nodiscard]] constexpr Type packet_event_type(const packet::PacketId id) {
     return static_cast<Type>(packet_event_offset() + static_cast<uint32_t>(id));
 }
 
-constexpr packet::PacketId packet_id_from_type(const Type t) {
+[[nodiscard]] constexpr packet::PacketId packet_id_from_type(const Type t) {
     return static_cast<packet::PacketId>(static_cast<uint32_t>(t) - packet_event_offset());
 }
 
@@ -158,8 +158,8 @@ struct TypedPacketEvent : Event {
 
 
 struct EventPolicies {
-    static Type getEvent(const Event& e) { return e.type; }
-    static bool canContinueInvoking(const Event& e) { return !e.canceled; }
+    static Type get_event(const Event& e) { return e.type; }
+    static bool can_continue_invoking(const Event& e) { return !e.canceled; }
 };
 
 using BaseDispatcher = eventpp::EventDispatcher<
@@ -173,7 +173,7 @@ public:
     using Handle = BaseDispatcher::Handle;
     using Callback = std::function<void(const Event&)>;
 
-    Handle appendListener(const Type event, const Callback& callback, const int8_t priority = Priority::Normal)
+    Handle append_listener(const Type event, const Callback& callback, const int8_t priority = Priority::Normal)
     {
         auto& entries = handles_[event];
 
@@ -190,12 +190,12 @@ public:
         return handle;
     }
 
-    Handle prependListener(const Type event, const Callback& callback)
+    [[nodiscard]] Handle prepend_listener(const Type event, const Callback& callback)
     {
-        return appendListener(event, callback, Priority::Highest);
+        return append_listener(event, callback, Priority::Highest);
     }
 
-    bool removeListener(Type event, const Handle& handle)
+    bool remove_listener(Type event, const Handle& handle)
     {
         if (const auto it = handles_.find(event); it != handles_.end()) {
             auto& entries = it->second;
@@ -215,8 +215,8 @@ public:
         dispatcher_.dispatch(e);
     }
 
-    BaseDispatcher& base() { return dispatcher_; }
-    const BaseDispatcher& base() const { return dispatcher_; }
+    [[nodiscard]] BaseDispatcher& base() { return dispatcher_; }
+    [[nodiscard]] const BaseDispatcher& base() const { return dispatcher_; }
 
 private:
     struct PriorityEntry {
@@ -253,7 +253,7 @@ public:
             return;
         }
 
-        dispatcher_->removeListener(type_, handle_);
+        dispatcher_->remove_listener(type_, handle_);
         dispatcher_ = nullptr;
     }
 

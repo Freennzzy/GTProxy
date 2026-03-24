@@ -1,7 +1,7 @@
 #pragma once
 
 namespace packet {
-enum NetMessageType : uint32_t {
+enum NetMessageType : std::uint32_t {
     NET_MESSAGE_UNKNOWN,
     NET_MESSAGE_SERVER_HELLO,
     NET_MESSAGE_GENERIC_TEXT,
@@ -65,7 +65,7 @@ enum PacketType : uint8_t {
     PACKET_MAX,
 };
 
-enum PacketFlag : uint32_t {
+enum PacketFlag : std::uint32_t {
     PACKET_FLAG_NONE = 0,
     PACKET_FLAG_UNK = 1 << 1,
     PACKET_FLAG_RESET_VISUAL_STATE = 1 << 2,
@@ -93,7 +93,7 @@ struct GameUpdatePacket {
     PacketType type;
     uint8_t pad[3];
     union {
-        uint32_t net_id;
+        std::uint32_t net_id;
         int32_t object_change_type;
     };
     int32_t item_net_id;
@@ -101,36 +101,36 @@ struct GameUpdatePacket {
     union {
         PacketFlag value;
         struct {
-            uint32_t none : 1;
-            uint32_t unk : 1;
-            uint32_t reset_visual_state : 1;
-            uint32_t extended : 1;
-            uint32_t rotate_left : 1;
-            uint32_t on_solid : 1;
-            uint32_t on_fire_damage : 1;
-            uint32_t on_jump : 1;
-            uint32_t on_killed : 1;
-            uint32_t on_punched : 1;
-            uint32_t on_placed : 1;
-            uint32_t on_tile_action : 1;
-            uint32_t on_got_punched : 1;
-            uint32_t on_respawned : 1;
-            uint32_t on_collect_object : 1;
-            uint32_t on_trampoline : 1;
-            uint32_t on_damage : 1;
-            uint32_t on_slide : 1;
-            uint32_t pad_1 : 3;
-            uint32_t on_wall_hang : 1;
-            uint32_t pad_2 : 3;
-            uint32_t on_acid_damage : 1;
-            uint32_t pad_3 : 6;
+            std::uint32_t none : 1;
+            std::uint32_t unk : 1;
+            std::uint32_t reset_visual_state : 1;
+            std::uint32_t extended : 1;
+            std::uint32_t rotate_left : 1;
+            std::uint32_t on_solid : 1;
+            std::uint32_t on_fire_damage : 1;
+            std::uint32_t on_jump : 1;
+            std::uint32_t on_killed : 1;
+            std::uint32_t on_punched : 1;
+            std::uint32_t on_placed : 1;
+            std::uint32_t on_tile_action : 1;
+            std::uint32_t on_got_punched : 1;
+            std::uint32_t on_respawned : 1;
+            std::uint32_t on_collect_object : 1;
+            std::uint32_t on_trampoline : 1;
+            std::uint32_t on_damage : 1;
+            std::uint32_t on_slide : 1;
+            std::uint32_t pad_1 : 3;
+            std::uint32_t on_wall_hang : 1;
+            std::uint32_t pad_2 : 3;
+            std::uint32_t on_acid_damage : 1;
+            std::uint32_t pad_3 : 6;
         };
     } flags;
 
     float float_var;
 
     union {
-        uint32_t decompressed_data_size;
+        std::uint32_t decompressed_data_size;
         int32_t object_id;
         int32_t int_data;
         int32_t item_id;
@@ -149,7 +149,7 @@ struct GameUpdatePacket {
         };
     };
 
-    uint32_t data_size;
+    std::uint32_t data_size;
 };
 #pragma pack(pop)
 }

@@ -28,7 +28,7 @@ void ConnectionHandler::setup_connection_handlers()
     handles_.emplace_back(
         dispatcher_,
         event::Type::ClientConnect,
-        dispatcher_.appendListener(event::Type::ClientConnect, [this](const event::Event&) {
+        dispatcher_.append_listener(event::Type::ClientConnect, [this](const event::Event&) {
             if (pending_port_ == 65535) {
                 return;
             }
@@ -44,7 +44,7 @@ void ConnectionHandler::setup_connection_handlers()
     handles_.emplace_back(
         dispatcher_,
         event::Type::ClientDisconnect,
-        dispatcher_.appendListener(event::Type::ClientDisconnect, [this](const event::Event&) {
+        dispatcher_.append_listener(event::Type::ClientDisconnect, [this](const event::Event&) {
             if (!client_.is_connected()) {
                 return;
             }
@@ -57,7 +57,7 @@ void ConnectionHandler::setup_connection_handlers()
     handles_.emplace_back(
         dispatcher_,
         event::Type::ServerDisconnect,
-        dispatcher_.appendListener(event::Type::ServerDisconnect, [this](const event::Event&) {
+        dispatcher_.append_listener(event::Type::ServerDisconnect, [this](const event::Event&) {
             if (!server_.is_connected()) {
                 return;
             }
@@ -74,7 +74,7 @@ void ConnectionHandler::setup_on_send_to_server_handler()
     handles_.emplace_back(
         dispatcher_,
         on_send_to_server_type,
-        dispatcher_.appendListener(on_send_to_server_type, [this](const event::Event& event) {
+        dispatcher_.append_listener(on_send_to_server_type, [this](const event::Event& event) {
             const auto* evt = dynamic_cast<const event::TypedPacketEvent<packet::PacketId::OnSendToServer>*>(&event);
             if (!evt) {
                 return;
@@ -104,7 +104,7 @@ void ConnectionHandler::setup_quit_handler()
     handles_.emplace_back(
         dispatcher_,
         quit_type,
-        dispatcher_.appendListener(quit_type, [this](const event::Event& event) {
+        dispatcher_.append_listener(quit_type, [this](const event::Event& event) {
             if (
                 const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::Quit>*>(&event) };
                 !evt || evt->direction != event::Direction::ServerBound
@@ -125,7 +125,7 @@ void ConnectionHandler::setup_disconnect_handler()
     handles_.emplace_back(
         dispatcher_,
         disconnect_type,
-        dispatcher_.appendListener(disconnect_type, [this](const event::Event& event) {
+        dispatcher_.append_listener(disconnect_type, [this](const event::Event& event) {
             if (
                 const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::Disconnect>*>(&event) };
                 !evt || evt->direction != event::Direction::ServerBound
@@ -147,7 +147,7 @@ void ConnectionHandler::setup_send_item_database_data_handler()
     handles_.emplace_back(
         dispatcher_,
         send_item_database_data_type,
-        dispatcher_.appendListener(send_item_database_data_type, [](const event::Event& event) {
+        dispatcher_.append_listener(send_item_database_data_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::SendItemDatabaseData>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;
@@ -199,7 +199,7 @@ void ConnectionHandler::setup_on_super_main_start_handler()
     handles_.emplace_back(
         dispatcher_,
         on_send_to_server_type,
-        dispatcher_.appendListener(on_send_to_server_type, [](const event::Event& event) {
+        dispatcher_.append_listener(on_send_to_server_type, [](const event::Event& event) {
             const auto* evt = dynamic_cast<const event::TypedPacketEvent<packet::PacketId::OnSuperMainStartAcceptLogonHrdxs47254722215a>*>(&event);
             if (!evt) {
                 return;

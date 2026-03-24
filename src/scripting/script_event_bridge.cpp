@@ -57,14 +57,14 @@ sol::object LuaEventContext::parse_packet(sol::this_state s)
         return sol::make_object(s, sol::lua_nil);
     }
 
-    const auto msg_type = static_cast<packet::NetMessageType>(type_val);
+    const auto msg_type{ static_cast<packet::NetMessageType>(type_val) };
     spdlog::debug("[parse_packet] msg_type={} (raw={})", static_cast<int>(msg_type), type_val);
 
     if (msg_type == packet::NET_MESSAGE_GAME_MESSAGE || 
         msg_type == packet::NET_MESSAGE_GENERIC_TEXT ||
         msg_type == packet::NET_MESSAGE_ERROR) 
     {
-        const auto remaining = stream.get_size() - stream.get_read_offset();
+        const auto remaining{ stream.get_size() - stream.get_read_offset() };
         if (remaining > 0) {
             std::string content(reinterpret_cast<const char*>(stream.get_raw_ptr() + stream.get_read_offset()), remaining);
             if (!content.empty() && content.back() == '\0') {

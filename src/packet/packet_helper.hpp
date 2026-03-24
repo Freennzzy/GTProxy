@@ -88,7 +88,7 @@ struct VariantPacket : IPacket {
 };
 
 struct PacketHelper {
-    static std::vector<std::byte> serialize(const Payload& payload)
+    [[nodiscard]] static std::vector<std::byte> serialize(const Payload& payload)
     {
         if (const auto* raw = get_payload_if<RawPayload>(payload)) {
             return raw->data;
@@ -129,7 +129,7 @@ struct PacketHelper {
         return byte_stream.take_data();
     }
 
-    static std::vector<std::byte> serialize(IPacket& packet)
+    [[nodiscard]] static std::vector<std::byte> serialize(IPacket& packet)
     {
         if (packet.has_raw_data()) {
             return packet.raw_data;
@@ -138,7 +138,7 @@ struct PacketHelper {
         return serialize(packet.write());
     }
 
-    static bool write(IPacket& packet, NetworkSender auto& sender)
+    [[nodiscard]] static bool write(IPacket& packet, NetworkSender auto& sender)
     {
         auto data{ serialize(packet) };
         if (data.empty()) {
@@ -151,7 +151,7 @@ struct PacketHelper {
 
     template <class Packet, NetworkSender Sender>
     requires (std::derived_from<Packet, IPacket>)
-    static bool write(Packet& packet, Sender& sender)
+    [[nodiscard]] static bool write(Packet& packet, Sender& sender)
     {
         auto data{ serialize(packet) };
         if (data.empty()) {

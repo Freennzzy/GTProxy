@@ -20,7 +20,7 @@ inline bool is_valid_ip_address(const std::string& address)
 
     return std::ranges::all_of(parts, [](const std::string_view& part){
         try {
-            uint8_t value{};
+            std::uint8_t value{};
             if (std::from_chars(part.data(), part.data() + part.size(), value).ec != std::errc{}) {
                 return false;
             }
@@ -40,7 +40,7 @@ constexpr HostType classify_host(const std::string& host)
         : HostType::Hostname;
 }
 
-inline std::string format_ip_address(const uint32_t ip_address)
+inline std::string format_ip_address(const std::uint32_t ip_address)
 {
     return std::format(
         "{}.{}.{}.{}",

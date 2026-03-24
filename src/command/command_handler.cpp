@@ -34,7 +34,7 @@ CommandHandler::CommandHandler(
     registry_.set_prefix(config_.get_command_config().prefix);
     register_default_commands();
 
-    listener_handle_ = dispatcher_.prependListener(
+    listener_handle_ = dispatcher_.prepend_listener(
         input_event_type,
         [this](const event::Event& e) { on_text_packet(e); }
     );
@@ -44,7 +44,7 @@ CommandHandler::CommandHandler(
 
 CommandHandler::~CommandHandler()
 {
-    dispatcher_.removeListener(input_event_type, listener_handle_);
+    dispatcher_.remove_listener(input_event_type, listener_handle_);
 }
 
 void CommandHandler::register_default_commands()

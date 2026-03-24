@@ -8,19 +8,19 @@ using pcg32_rng = random_generator<pcg32>;
 }
 
 namespace utils::random {
-inline randutils::pcg32_rng static_generator()
+[[nodiscard]] inline randutils::pcg32_rng static_generator()
 {
     static randutils::pcg32_rng pcg_rng{};
     return pcg_rng;
 }
 
-inline randutils::pcg32_rng thread_local_generator()
+[[nodiscard]] inline randutils::pcg32_rng thread_local_generator()
 {
     thread_local randutils::pcg32_rng pcg_rng{};
     return pcg_rng;
 }
 
-inline randutils::pcg32_rng local_generator()
+[[nodiscard]] inline randutils::pcg32_rng local_generator()
 {
     const randutils::pcg32_rng pcg_rng{};
     return pcg_rng;

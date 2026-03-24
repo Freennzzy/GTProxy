@@ -35,9 +35,9 @@ public:
 
     [[nodiscard]] virtual std::string_view name() const = 0;
 
-    virtual std::string description() const = 0;
+    [[nodiscard]] virtual std::string description() const = 0;
 
-    virtual Result execute(const Context& ctx) = 0;
+    [[nodiscard]] virtual Result execute(const Context& ctx) = 0;
 };
 
 template <typename Func>
@@ -52,7 +52,7 @@ public:
     [[nodiscard]] std::string_view name() const override { return name_; }
     [[nodiscard]] std::string description() const override { return description_; }
 
-    Result execute(const Context& ctx) override
+    [[nodiscard]] Result execute(const Context& ctx) override
     {
         if constexpr (std::is_same_v<std::invoke_result_t<Func, const Context&>, void>) {
             func_(ctx);

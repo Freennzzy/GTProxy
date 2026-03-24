@@ -5,19 +5,19 @@
 #include <string_view>
 
 namespace utils::hash {
-[[nodiscard]] constexpr uint32_t fnv1a_32(std::string_view str, uint32_t hash = 0x811c9dc5)
+[[nodiscard]] constexpr std::int32_t fnv1a_32(std::string_view str, std::int32_t hash = 0x811c9dc5)
 {
     for (auto& c : str) {
-        hash ^= static_cast<uint32_t>(c);
+        hash ^= static_cast<std::int32_t>(c);
         hash *= 0x01000193;
     }
 
     return hash;
 }
 
-[[nodiscard]] constexpr uint32_t proton(const char* data, std::size_t length = 0)
+[[nodiscard]] constexpr std::int32_t proton(const char* data, std::size_t length = 0)
 {
-    uint32_t hash{ 0x55555555 };
+    std::int32_t hash{ 0x55555555 };
     if (!data) {
         return hash;
     }
@@ -28,14 +28,14 @@ namespace utils::hash {
 
     if (length > 0) {
         while (length--) {
-            hash = (hash >> 27) + (hash << 5) + *reinterpret_cast<const uint8_t*>(data++);
+            hash = (hash >> 27) + (hash << 5) + *reinterpret_cast<const std::uint8_t*>(data++);
         }
     }
 
     return hash;
 }
 
-[[nodiscard]] inline uint32_t proton_file(const std::string& file_path)
+[[nodiscard]] inline std::int32_t proton_file(const std::string& file_path)
 {
     std::ifstream in{ file_path, std::ios::binary };
     if (!in) {
@@ -57,12 +57,12 @@ namespace utils::hash {
 }
 }
 
-[[nodiscard]] constexpr uint32_t operator "" _fnv1a_32(const char* str, const std::size_t len)
+[[nodiscard]] constexpr std::int32_t operator "" _fnv1a_32(const char* str, const std::size_t len)
 {
     return utils::hash::fnv1a_32(std::string_view{ str, len });
 }
 
-[[nodiscard]] constexpr int32_t operator "" _proton(const char* str, const std::size_t len)
+[[nodiscard]] constexpr std::int32_t operator "" _proton(const char* str, const std::size_t len)
 {
-    return utils::hash::proton(str, static_cast<uint32_t>(len));
+    return utils::hash::proton(str, static_cast<std::int32_t>(len));
 }

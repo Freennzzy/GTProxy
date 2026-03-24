@@ -63,7 +63,7 @@ void ItemBindings::bind_item_info(sol::state& lua)
 
 void ItemBindings::bind_enums(sol::state& lua)
 {
-    auto item_table = lua["item"].get_or_create<sol::table>();
+    auto item_table{ lua["item"].get_or_create<sol::table>() };
 
     auto type_table{ lua.create_table() };
     for (const auto v : magic_enum::enum_values<item::ItemType>()) {

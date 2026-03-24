@@ -18,7 +18,7 @@ void ForwardingHandler::setup_raw_packet_handlers()
     handles_.emplace_back(
         dispatcher_,
         event::Type::ClientBoundPacket,
-        dispatcher_.appendListener(event::Type::ClientBoundPacket, [this](const event::Event& event) {
+        dispatcher_.append_listener(event::Type::ClientBoundPacket, [this](const event::Event& event) {
             const auto raw_packet{ dynamic_cast<const event::RawPacketEvent*>(&event) };
             if (!raw_packet) {
                 return;
@@ -31,7 +31,7 @@ void ForwardingHandler::setup_raw_packet_handlers()
     handles_.emplace_back(
         dispatcher_,
         event::Type::ServerBoundPacket,
-        dispatcher_.appendListener(event::Type::ServerBoundPacket, [this](const event::Event& event) {
+        dispatcher_.append_listener(event::Type::ServerBoundPacket, [this](const event::Event& event) {
             const auto raw_packet{ dynamic_cast<const event::RawPacketEvent*>(&event) };
             if (!raw_packet) {
                 return;

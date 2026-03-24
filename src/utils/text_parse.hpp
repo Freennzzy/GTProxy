@@ -46,7 +46,7 @@ public:
         }
     }
 
-    static std::vector<std::string_view> tokenize(std::string_view str, std::string_view delimiter = "|", const bool keep_empty = true)
+    [[nodiscard]] static std::vector<std::string_view> tokenize(std::string_view str, std::string_view delimiter = "|", const bool keep_empty = true)
     {
         std::vector<std::string_view> tokens{};
         if (str.empty()) {
@@ -278,7 +278,7 @@ public:
 
 private:
     template<typename T>
-    static std::string convert_to_string(const T& value)
+    [[nodiscard]] static std::string convert_to_string(const T& value)
     {
         if constexpr (std::is_same_v<T, std::string>) {
             return value;

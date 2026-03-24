@@ -9,7 +9,7 @@
 #include "../utils/byte_stream.hpp"
 
 namespace packet {
-enum class VariantType : uint8_t {
+enum class VariantType : std::uint8_t {
     UNKNOWN,
     FLOAT,
     STRING,
@@ -19,7 +19,7 @@ enum class VariantType : uint8_t {
     SIGNED = 9
 };
 
-using variant = std::variant<float, std::string, glm::vec2, glm::vec3, uint32_t, int32_t>;
+using variant = std::variant<float, std::string, glm::vec2, glm::vec3, std::uint32_t, std::int32_t>;
 
 class PacketVariant {
 public:

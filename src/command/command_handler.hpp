@@ -18,8 +18,8 @@ public:
     );
     ~CommandHandler();
 
-    CommandRegistry& registry() { return registry_; }
-    const CommandRegistry& registry() const { return registry_; }
+    [[nodiscard]] CommandRegistry& registry() { return registry_; }
+    [[nodiscard]] const CommandRegistry& registry() const { return registry_; }
 
 private:
     void register_default_commands();

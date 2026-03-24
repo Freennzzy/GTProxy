@@ -8,7 +8,7 @@
 #include "payload.hpp"
 
 namespace packet {
-enum class PacketId : uint32_t {
+enum class PacketId : std::uint32_t {
     ServerHello,
     Padding = 0x1000,
     Quit,
@@ -33,7 +33,7 @@ enum class PacketId : uint32_t {
     OnSpawn,
     OnRemove,
     OnSuperMainStartAcceptLogonHrdxs47254722215a,
-    Unknown = std::numeric_limits<uint32_t>::max(),
+    Unknown = std::numeric_limits<std::uint32_t>::max(),
 };
 
 struct TextRegexPattern {

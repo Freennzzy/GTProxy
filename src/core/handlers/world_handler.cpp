@@ -29,7 +29,7 @@ void WorldHandler::setup_join_request_handler()
     handles_.emplace_back(
         dispatcher_,
         join_request_type,
-        dispatcher_.appendListener(join_request_type, [](const event::Event& event) {
+        dispatcher_.append_listener(join_request_type, [](const event::Event& event) {
             if (
                 const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::JoinRequest>*>(&event) };
                 !evt || evt->direction != event::Direction::ServerBound
@@ -48,7 +48,7 @@ void WorldHandler::setup_on_spawn_handler()
     handles_.emplace_back(
         dispatcher_,
         on_spawn_type,
-        dispatcher_.appendListener(on_spawn_type, [](const event::Event& event) {
+        dispatcher_.append_listener(on_spawn_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::OnSpawn>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;
@@ -71,7 +71,7 @@ void WorldHandler::setup_on_remove_handler()
     handles_.emplace_back(
         dispatcher_,
         on_remove_type,
-        dispatcher_.appendListener(on_remove_type, [](const event::Event& event) {
+        dispatcher_.append_listener(on_remove_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::OnRemove>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;
@@ -93,7 +93,7 @@ void WorldHandler::setup_send_map_data_handler()
     handles_.emplace_back(
         dispatcher_,
         send_map_data_type,
-        dispatcher_.appendListener(send_map_data_type, [](const event::Event& event) {
+        dispatcher_.append_listener(send_map_data_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::SendMapData>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;
@@ -115,7 +115,7 @@ void WorldHandler::setup_send_tile_update_data_handler()
     handles_.emplace_back(
         dispatcher_,
         send_tile_update_data_type,
-        dispatcher_.appendListener(send_tile_update_data_type, [](const event::Event& event) {
+        dispatcher_.append_listener(send_tile_update_data_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::SendTileUpdateData>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;
@@ -145,7 +145,7 @@ void WorldHandler::setup_tile_change_request_handler()
     handles_.emplace_back(
         dispatcher_,
         tile_change_request_type,
-        dispatcher_.appendListener(tile_change_request_type, [](const event::Event& event) {
+        dispatcher_.append_listener(tile_change_request_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::TileChangeRequest>*>(&event) };
             if (!evt) {
                 return;
@@ -182,7 +182,7 @@ void WorldHandler::setup_item_change_object_handler()
     handles_.emplace_back(
         dispatcher_,
         item_change_object_type,
-        dispatcher_.appendListener(item_change_object_type, [](const event::Event& event) {
+        dispatcher_.append_listener(item_change_object_type, [](const event::Event& event) {
             const auto evt{ dynamic_cast<const event::TypedPacketEvent<packet::PacketId::ItemChangeObject>*>(&event) };
             if (!evt || evt->direction != event::Direction::ClientBound) {
                 return;

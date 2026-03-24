@@ -15,7 +15,7 @@
 namespace packet {
 using PacketFactory = std::function<std::shared_ptr<IPacket>()>;
 
-inline std::string packet_name(const PacketId id) {
+[[nodiscard]] inline std::string packet_name(const PacketId id) {
     if (const auto name = magic_enum::enum_name(id); !name.empty()) {
         return std::string{name};
     }

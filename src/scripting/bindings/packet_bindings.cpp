@@ -22,7 +22,7 @@ void PacketBindings::bind_enums(sol::state& lua)
 {
     auto packet_table = lua["packet"].get_or(lua.create_table());
 
-    auto type_table = lua.create_table();
+    auto type_table{ lua.create_table() };
     constexpr auto type_values = magic_enum::enum_values<packet::PacketType>();
     for (const auto v : type_values) {
         type_table[magic_enum::enum_name(v)] = static_cast<uint8_t>(v);
@@ -412,7 +412,7 @@ void PacketBindings::bind_packet_variant(sol::state& lua)
 
             const auto& variants = var.get_variants();
             const auto& v = variants[index];
-            const auto type = packet::PacketVariant::get_type(v);
+            const auto type{ packet::PacketVariant::get_type(v) };
 
             switch (type) {
             case packet::VariantType::FLOAT:
@@ -570,7 +570,7 @@ bool PacketBindings::send_text_packet(
     stream.write(magic_enum::enum_underlying(msg_type));
     stream.write(text, false);
 
-    auto data = stream.get_data();
+    auto data{ stream.get_data() };
     data.push_back(static_cast<std::byte>(0x00));
 
     return send_to_direction(data, to_server);
