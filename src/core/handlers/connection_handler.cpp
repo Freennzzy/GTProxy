@@ -212,7 +212,7 @@ void ConnectionHandler::setup_on_super_main_start_handler()
 
             // ReSharper disable once CppVariableCanBeMadeConstexpr
             const std::string cache_path{ "resources/items.dat" };
-            const auto server_hash{ static_cast<std::uint32_t>(pkt->item_hash) };
+            const auto server_hash{ static_cast<std::int32_t>(pkt->item_hash) };
             const auto cached_hash{ (utils::hash::proton_file(cache_path)) };
 
             if (server_hash != cached_hash) {
